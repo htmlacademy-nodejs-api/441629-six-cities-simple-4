@@ -15,7 +15,7 @@ export type OfferType = {
   roomCount: number;
   guestCount: number;
   price: number;
-  advantage: AdvantageEnum;
+  advantage: AdvantageEnum[];
   owner: UserType;
   commentsCount: number;
   coords: { latitude: number, longitude: number };
