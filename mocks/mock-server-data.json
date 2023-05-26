@@ -1,0 +1,110 @@
+{
+  "api": {
+    "titles": [
+      "Cozy home",
+      "The best hotel",
+      "Wonderful room",
+      "Beautiful aparment",
+      "Your flat"
+    ],
+    "descriptions": [
+      "Is the very beautiful place",
+      "Flat in the city center",
+      "Room with big balcony",
+      "Aparment with city view",
+      "Cheap variant for night"
+    ],
+    "dates": [
+      "2022-12-30T08:45:40.283Z",
+      "2022-10-21T08:45:40.283Z",
+      "2022-09-01T08:45:40.283Z",
+      "2023-01-06T08:45:40.283Z",
+      "2022-03-01T09:11:02.283Z"
+    ],
+    "cities": [
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
+    ],
+    "previews": [
+      "preview-image-1.jpg",
+      "preview-image-2.jpg",
+      "preview-image-3.jpg",
+      "preview-image-4.jpg",
+      "preview-image-5.jpg"
+    ],
+    "photoes": [
+      "1.jpg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg"
+    ],
+    "offerTypes": [
+      "apartment",
+      "house",
+      "room",
+      "hotel"
+    ],
+    "advantages": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Washer",
+      "Towels",
+      "Fridge"
+    ],
+    "names": [
+      "Peter",
+      "John",
+      "Kristin",
+      "Luna",
+      "Alex"
+    ],
+    "emails": [
+      "test@mail.com",
+      "email@greet.net",
+      "user@two.up",
+      "email@yo.com",
+      "name@email.use"
+    ],
+    "avatars": [
+      "user-1.jpg",
+      "user-2.jpg",
+      "user-3.jpg",
+      "user-4.jpg",
+      "user-5.jpg"
+    ],
+    "passwords": [
+      "qwerty",
+      "pass",
+      "my_password",
+      "secret",
+      "for-mail"
+    ],
+    "types": [
+      "pro",
+      "base"
+    ],
+    "latitude": [
+      48.85661,
+      50.938361,
+      50.846557,
+      52.370216,
+      53.550341,
+      51.225402
+    ],
+    "longitude": [
+      2.351499,
+      6.959974,
+      4.351697,
+      4.895168,
+      10.000654,
+      6.776314
+    ]
+  }
+}

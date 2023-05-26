@@ -6,4 +6,4 @@ export enum AdvantageEnum {
   WASHER = 'Washer',
   TOWELS = 'Towels',
   FRIDGE = 'Fridge',
-};
+}
