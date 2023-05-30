@@ -3,4 +3,4 @@ export enum OfferTypeEnum {
   HOUSE = 'house',
   ROOM = 'room',
   HOTER = 'hotel',
-};
+}
