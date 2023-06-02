@@ -1,7 +1,9 @@
-import { AdvantageEnum } from '../../enums/advantage.enum';
-import { OfferTypeEnum } from '../../enums/offer-type.enum';
-import { UserTypeEnum } from '../../enums/user-type.enum';
-import { OfferType } from '../../types/offer.type';
+import { AdvantageEnum } from '../../enums/advantage.enum.js';
+import { CityCoords } from '../../enums/city-coords.js';
+import { CityEnum } from '../../enums/city.enum.js';
+import { OfferTypeEnum } from '../../enums/offer-type.enum.js';
+import { UserTypeEnum } from '../../enums/user-type.enum.js';
+import { OfferType } from '../../types/offer.type.js';
 
 export function createOffer(offerData: string): OfferType {
   const [
@@ -33,14 +35,18 @@ export function createOffer(offerData: string): OfferType {
     email,
     avatar,
     password,
-    type: userType as UserTypeEnum
+    userType: userType as UserTypeEnum
   };
 
   return {
     title,
     description,
     postDate: new Date(date),
-    city,
+    city: {
+      name: city as CityEnum,
+      latitude: CityCoords[city as CityEnum].latitude,
+      longitude: CityCoords[city as CityEnum].longitude,
+    },
     preview,
     photo: photo.split(';'),
     isPremium: Boolean(isPremium),
