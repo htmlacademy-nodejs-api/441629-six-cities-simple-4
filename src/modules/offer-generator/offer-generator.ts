@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
-import { generateRandomValue, getRandomItem, getRandomItems } from '../../core/helpers/index.js';
+import { generateRandomValue, getRandomCoordinates, getRandomItem, getRandomItems } from '../../core/helpers/index.js';
 import { MockDataType } from '../../types/mock-data.type';
 import { OfferGeneratorInterface } from './offer-generator.interface';
+import { CityCoords } from '../../enums/city-coords.js';
+import { CityEnum } from '../../enums/city.enum.js';
 
 const FIRST_WEEK_DAY = 1;
 const LAST_WEEK_DAY = 7;
@@ -44,8 +46,8 @@ export default class OfferGenerator implements OfferGeneratorInterface {
     const password = getRandomItem<string>(this.mockData.passwords);
     const userType = getRandomItem<string>(this.mockData.types);
     const commentsCount = generateRandomValue(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
-    const latitude = getRandomItem<number>(this.mockData.latitude);
-    const longitude = getRandomItem<number>(this.mockData.longitude);
+    const latitude = getRandomCoordinates(CityCoords[city as CityEnum].latitude);
+    const longitude = getRandomCoordinates(CityCoords[city as CityEnum].longitude);
 
     return [
       title, description, date, city, preview,

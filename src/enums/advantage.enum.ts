@@ -5,5 +5,5 @@ export enum AdvantageEnum {
   BABY_SEAT = 'Baby seat',
   WASHER = 'Washer',
   TOWELS = 'Towels',
-  FRIDGE = 'Fridge',
+  FRIDGE = 'Fridge'
 }

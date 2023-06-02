@@ -11,3 +11,10 @@ export function getRandomItems<T>(items: T[]):T[] {
   const endPosition = startPosition + generateRandomValue(startPosition, items.length);
   return items.slice(startPosition, endPosition);
 }
+
+export function getRandomCoordinates(value: number): number {
+  const leftPart = value > 0 ? Math.floor(value) : Math.ceil(value);
+  const part = (Math.abs(value) - Math.abs(leftPart)) * 1e6;
+
+  return leftPart + generateRandomValue(0, part) / 1e6;
+}
