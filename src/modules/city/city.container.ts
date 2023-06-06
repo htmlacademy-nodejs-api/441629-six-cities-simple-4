@@ -1,9 +1,9 @@
 import { Container } from 'inversify';
 import { types } from '@typegoose/typegoose';
-import { CityServiceInterface } from './city-service.interface';
-import { AppComponentEnum } from '../../types/app-component.enum';
-import CityService from './city.service';
-import { CityEntity, CityModel } from './city.entity';
+import { CityServiceInterface } from './city-service.interface.js';
+import { AppComponentEnum } from '../../types/app-component.enum.js';
+import CityService from './city.service.js';
+import { CityEntity, CityModel } from './city.entity.js';
 
 export function createCityContainer() {
   const cityContainer = new Container();

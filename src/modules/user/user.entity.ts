@@ -14,13 +14,13 @@ export interface UserEntity extends defaultClasses.Base { }
 })
 export class UserEntity extends defaultClasses.TimeStamps implements UserType {
   @prop({ required: true, default: '' })
-  public name = '';
+  public name!: string;
 
   @prop({ required: true, unique: true })
-  public email = '';
+  public email!: string;
 
   @prop({ required: false, default: '' })
-  public avatar = '';
+  public avatar: string;
 
   @prop({
     required: false,
@@ -30,7 +30,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements UserType {
   public userType!: UserTypeEnum;
 
   @prop({ required: true, default: '' })
-  public password!: string;
+  public password?: string;
 
   constructor(userData: UserType) {
     super();

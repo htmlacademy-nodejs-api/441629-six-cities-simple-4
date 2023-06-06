@@ -14,6 +14,8 @@ services:
 
   db_ui:
     image: mongo-express:latest
+    depends_on:
+      - db
     restart: always
     container_name: six-cities_mongo-express
     ports:

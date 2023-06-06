@@ -8,6 +8,14 @@ const { prop, modelOptions } = typegoose;
 
 export interface OfferEntity extends defaultClasses.Base { }
 
+class Coords {
+  @prop({ required: true, type: Number })
+  public latitude!: number;
+
+  @prop({ required: true, type: Number })
+  public longitude!: number;
+}
+
 @modelOptions({
   schemaOptions: {
     collection: 'offers',
@@ -32,7 +40,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop()
   public preview!: string;
 
-  @prop()
+  @prop({ type: String })
   public photo!: string[];
 
   @prop()
@@ -73,8 +81,8 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ default: 0 })
   public commentsCount!: number;
 
-  @prop({ required: true })
-  public coords!: Record<'latitude' | 'longitude', number>;
+  @prop({ required: true, type: Coords })
+  public coords!: Coords;
 }
 
 export const OfferModel = getModelForClass(OfferEntity);
