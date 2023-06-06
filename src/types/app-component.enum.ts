@@ -9,4 +9,6 @@ export const AppComponentEnum = {
   CityModel: Symbol.for('CityModel'),
   OfferServiceInterface: Symbol.for('OfferServiceInterface'),
   OfferModel: Symbol.for('OfferModel'),
+  CommentServiceInterface: Symbol.for('CommentServiceInterface'),
+  CommentModel: Symbol.for('CommentModel'),
 } as const;
