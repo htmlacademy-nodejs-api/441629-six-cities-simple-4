@@ -8,7 +8,7 @@ const { prop, modelOptions } = typegoose;
 
 export interface OfferEntity extends defaultClasses.Base { }
 
-class Coords {
+export class Coords {
   @prop({ required: true, type: Number })
   public latitude!: number;
 

@@ -5,7 +5,7 @@ import { AppComponentEnum } from '../../types/app-component.enum.js';
 import { LoggerInterface } from '../../core/logger/logger.interface.js';
 import { CityEntity } from './city.entity.js';
 import CreateCityDto from './dto/create-city.dto.js';
-import { MAX_CITITES_COUNT } from './city.contant.js';
+import { MAX_CITITES_COUNT } from './city.constant.js';
 import { SortTypeEnum } from '../../types/sort-type.enum.js';
 
 @injectable()
