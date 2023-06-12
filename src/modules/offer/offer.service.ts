@@ -30,9 +30,10 @@ export default class OfferService implements OfferServiceInterface {
       .exec();
   }
 
-  public async find(): Promise<DocumentType<OfferEntity>[]> {
+  public async find(count?: number): Promise<DocumentType<OfferEntity>[]> {
+    const limit = count ?? DEFAULT_OFFER_COUNT;
     return this.offerModel
-      .find()
+      .find({}, {}, { limit })
       .populate(['city', 'owner'])
       .exec();
   }
@@ -73,11 +74,12 @@ export default class OfferService implements OfferServiceInterface {
       .exec();
   }
 
-  public async findNew(count: number): Promise<DocumentType<OfferEntity>[]> {
+  public async findNew(count?: number): Promise<DocumentType<OfferEntity>[]> {
+    const limit = count ?? DEFAULT_OFFER_COUNT;
     return this.offerModel
       .find()
       .sort({ createdAt: SortTypeEnum.Down })
-      .limit(count)
+      .limit(limit)
       .populate(['city', 'owner'])
       .exec();
   }
