@@ -11,6 +11,7 @@ export interface OfferServiceInterface {
   updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null>;
   findByCityId(cityId: string, count?: number): Promise<DocumentType<OfferEntity>[]>;
   incCommentsCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
+  updateRating(offerId: string, value: number): Promise<DocumentType<OfferEntity> | null>;
   findNew(count?: number): Promise<DocumentType<OfferEntity>[]>;
   findDiscussed(count: number): Promise<DocumentType<OfferEntity>[]>;
   exists(documentId: string): Promise<boolean>;
