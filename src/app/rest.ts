@@ -19,7 +19,8 @@ export default class RestApplication {
     @inject(AppComponentEnum.CityController) private readonly cityController: ControllerInterface,
     @inject(AppComponentEnum.ExceptionFilterInterface) private readonly exceptionFilter: ExceptionFilterInterface,
     @inject(AppComponentEnum.UserController) private readonly userController: ControllerInterface,
-    @inject(AppComponentEnum.OfferController) private readonly offerController: ControllerInterface
+    @inject(AppComponentEnum.OfferController) private readonly offerController: ControllerInterface,
+    @inject(AppComponentEnum.CommentController) private readonly commentController: ControllerInterface,
   ) {
     this.expressApplication = express();
   }
@@ -51,6 +52,7 @@ export default class RestApplication {
     this.expressApplication.use('/city', this.cityController.router);
     this.expressApplication.use('/user', this.userController.router);
     this.expressApplication.use('/offer', this.offerController.router);
+    this.expressApplication.use('/comment', this.commentController.router);
     this.logger.info('Controller initialization completed');
   }
 

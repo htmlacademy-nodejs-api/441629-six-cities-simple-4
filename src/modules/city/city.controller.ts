@@ -10,6 +10,7 @@ import { fillDTO } from '../../core/helpers/common.js';
 import CityRdo from './rdo/city.rdo.js';
 import CreateCityDto from './dto/create-city.dto.js';
 import HttpError from '../../core/errors/http-error.js';
+import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
 
 @injectable()
 export default class CityController extends Controller {
@@ -21,8 +22,17 @@ export default class CityController extends Controller {
 
     this.logger.info('Register routes for CityController...');
 
-    this.addRoute({ path: '/', method: HttpMethodEnum.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethodEnum.Post, handler: this.create });
+    this.addRoute({
+      path: '/',
+      method: HttpMethodEnum.Get,
+      handler: this.index,
+    });
+    this.addRoute({
+      path: '/',
+      method: HttpMethodEnum.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateCityDto)],
+    });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {

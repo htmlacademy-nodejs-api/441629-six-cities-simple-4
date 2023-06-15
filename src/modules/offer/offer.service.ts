@@ -74,6 +74,23 @@ export default class OfferService implements OfferServiceInterface {
       .exec();
   }
 
+  public async updateRating(offerId: string, value: number): Promise<DocumentType<OfferEntity> | null> {
+    const offer = await this.offerModel.findById(offerId);
+    let rating = null;
+
+    if (offer?.rating && offer?.commentsCount) {
+      rating = (offer?.rating * offer?.commentsCount + value) / (offer?.commentsCount + 1);
+    } else {
+      rating = value;
+    }
+
+    return this.offerModel
+      .findByIdAndUpdate(offerId, {
+        rating
+      })
+      .exec();
+  }
+
   public async findNew(count?: number): Promise<DocumentType<OfferEntity>[]> {
     const limit = count ?? DEFAULT_OFFER_COUNT;
     return this.offerModel
