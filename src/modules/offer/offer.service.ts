@@ -79,14 +79,14 @@ export default class OfferService implements OfferServiceInterface {
     let rating = null;
 
     if (offer?.rating && offer?.commentsCount) {
-      rating = (offer?.rating * offer?.commentsCount + value) / (offer?.commentsCount + 1);
+      rating = (offer.rating * offer.commentsCount + value) / (offer.commentsCount + 1);
     } else {
       rating = value;
     }
 
     return this.offerModel
       .findByIdAndUpdate(offerId, {
-        rating
+        rating: rating.toFixed(1),
       })
       .exec();
   }

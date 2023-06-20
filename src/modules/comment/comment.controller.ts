@@ -12,6 +12,8 @@ import CreateCommentDto from './dto/create-comment.dto.js';
 import HttpError from '../../core/errors/http-error.js';
 import { fillDTO } from '../../core/helpers/common.js';
 import CommentRdo from './rdo/comment.rdo.js';
+import { PrivateRouteMiddleware } from '../../core/middleware/private-route.middleware.js';
+import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
 
 @injectable()
 export default class CommentController extends Controller {
@@ -23,11 +25,19 @@ export default class CommentController extends Controller {
     super(logger);
 
     this.logger.info('Register routes for CommentController...');
-    this.addRoute({ path: '/', method: HttpMethodEnum.Post, handler: this.create });
+    this.addRoute({
+      path: '/',
+      method: HttpMethodEnum.Post,
+      handler: this.create,
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateCommentDto),
+      ],
+    });
   }
 
   public async create(
-    { body }: Request<UnknownRecord, UnknownRecord, CreateCommentDto>,
+    { body, user }: Request<UnknownRecord, UnknownRecord, CreateCommentDto>,
     res: Response,
   ): Promise<void> {
     if (! await this.offerService.exists(body.offerId)) {
@@ -38,7 +48,7 @@ export default class CommentController extends Controller {
       );
     }
 
-    const comment = await this.commentService.create(body);
+    const comment = await this.commentService.create({ ...body, userId: user.id });
     await this.offerService.updateRating(body.offerId, body.rating);
     await this.offerService.incCommentsCount(body.offerId);
 

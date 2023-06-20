@@ -6,6 +6,7 @@ import { UserEntity } from './user.entity.js';
 import { AppComponentEnum } from '../../types/app-component.enum.js';
 import { LoggerInterface } from '../../core/logger/logger.interface.js';
 import UpdateUserDto from './dto/update-user.dto.js';
+import LoginUserDto from './dto/login-user.dto.js';
 
 @injectable()
 export default class UserService implements UserServiceInterface {
@@ -47,5 +48,15 @@ export default class UserService implements UserServiceInterface {
   public async exists(userId: string): Promise<boolean> {
     return (await this.userModel
       .exists({ _id: userId })) !== null;
+  }
+
+  public async verifyUser(dto: LoginUserDto, salt: string): Promise<DocumentType<UserEntity> | null> {
+    const user = await this.findByEmail(dto.email);
+
+    if (user && user.verifyPassword(dto.password, salt)) {
+      return user;
+    }
+
+    return null;
   }
 }

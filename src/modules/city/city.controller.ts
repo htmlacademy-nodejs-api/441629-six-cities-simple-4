@@ -11,6 +11,7 @@ import CityRdo from './rdo/city.rdo.js';
 import CreateCityDto from './dto/create-city.dto.js';
 import HttpError from '../../core/errors/http-error.js';
 import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
+import { PrivateRouteMiddleware } from '../../core/middleware/private-route.middleware.js';
 
 @injectable()
 export default class CityController extends Controller {
@@ -31,7 +32,10 @@ export default class CityController extends Controller {
       path: '/',
       method: HttpMethodEnum.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateCityDto)],
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateCityDto),
+      ],
     });
   }
 
