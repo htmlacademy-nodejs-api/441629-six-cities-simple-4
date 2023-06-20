@@ -3,7 +3,6 @@ import { Type } from 'class-transformer';
 import { AdvantageEnum } from '../../../enums/advantage.enum.js';
 import { OfferTypeEnum } from '../../../enums/offer-type.enum.js';
 import { CityType } from '../../../types/city.type.js';
-import { UserType } from '../../../types/user.type.js';
 
 export class CoordsDto {
   @IsNumber({}, { message: 'Field must be number' })
@@ -59,8 +58,7 @@ export default class CreateOfferDto {
   @IsEnum(AdvantageEnum, { each: true, message: 'Type must be an advantage type' })
   public advantage!: AdvantageEnum[];
 
-  @IsMongoId({ message: 'User id must be valid id' })
-  public owner!: UserType;
+  public owner!: string;
 
   @ValidateNested({ each: true })
   @Type(() => CoordsDto)

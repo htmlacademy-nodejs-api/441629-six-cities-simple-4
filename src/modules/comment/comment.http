@@ -3,12 +3,12 @@
 
 POST http://localhost:4000/comment HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAbWFpbC5jb20iLCJpZCI6IjY0NzlmMWZlOGEwNDk0MjRjZTNkOWNiMiIsImlhdCI6MTY4NzI4MDg3OSwiZXhwIjoxNjg3NDUzNjc5fQ.NeujjOfwKoSVPXImoWn_5DD6qgTulc1fkqQMAWPVnMM
 
 {
-  "text": "Test comment for increment counter",
-  "rating": 4,
-  "offerId": "648acc7f7aa36b67943516ee",
-  "userId": "6479f1fe8a049424ce3d9cb8"
+  "text": "Test comment for token",
+  "rating": 5,
+  "offerId": "6479f1ff8a049424ce3d9cc2"
 }
 
 ###
