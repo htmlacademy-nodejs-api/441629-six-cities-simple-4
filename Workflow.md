@@ -66,6 +66,25 @@ npm start
 
 В процессе запуска проекта будет выполнен процесс «Сборки проекта» и запуска результирующего кода.
 
+##### Переменные окружения
+
+Для работы проекта необходимо устрановить следующие переменные окружения в файле `.env`
+
+- PORT=`your port number`
+- SALT=`your salt for hashing password`
+- DB_HOST=`database host`
+- DB_USER=`database user`
+- DB_PASSWORD=`database password`
+- DB_PORT=`database port`
+- UPLOAD_DIRECTORY=`directory for upload files`
+- JWT_SECRET=`secret for JWT`
+- HOST=`host name`
+- STATIC_DIRECTORY_PATH=`directory for static files`
+
+#### Запуск базы данных (БД)
+
+Для запуска БД в корне проекта расположен файл `docker-compose.yml`, с помощью которого в докере можно развернуть `MongoDB` и `MongoDB Express`
+
 #### Запустить JSON сервер
 
 ```bash

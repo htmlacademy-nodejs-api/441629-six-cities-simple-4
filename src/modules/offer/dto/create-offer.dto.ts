@@ -1,4 +1,4 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean, IsDateString, IsEnum, IsInt, IsMongoId, IsNumber, Length, Max, MaxLength, Min, ValidateNested } from 'class-validator';
+import { IsArray, IsBoolean, IsDateString, IsEnum, IsInt, IsMongoId, IsNumber, Length, Max, Min, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { AdvantageEnum } from '../../../enums/advantage.enum.js';
 import { OfferTypeEnum } from '../../../enums/offer-type.enum.js';
@@ -24,14 +24,6 @@ export default class CreateOfferDto {
 
   @IsMongoId({ message: 'City id must be valid id' })
   public city!: CityType;
-
-  @MaxLength(256, { message: 'Too long for field IMAGE' })
-  public preview!: string;
-
-  @IsArray({ message: 'Field photo must be an integer' })
-  @ArrayMinSize(6, { message: 'Photos count must be 6' })
-  @ArrayMaxSize(6, { message: 'Photos count must be 6' })
-  public photo!: string[];
 
   @IsBoolean({ message: 'Field must be boolean' })
   public isPremium!: boolean;

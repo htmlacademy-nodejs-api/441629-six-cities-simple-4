@@ -7,7 +7,7 @@ Content-Type: application/json
 
 ## Получить объявление по идентификатору
 
-GET http://localhost:4000/offer/6479f1ff8a049424ce3d9cd6 HTTP/1.1
+GET http://localhost:4000/offer/6495761f2cae442c39f826f6 HTTP/1.1
 
 ###
 
@@ -15,6 +15,7 @@ GET http://localhost:4000/offer/6479f1ff8a049424ce3d9cd6 HTTP/1.1
 
 POST http://localhost:4000/offer HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5ydSIsImlkIjoiNjQ5NTcwMjQxNjU3YzAwMDRjMzRlYzYwIiwiaWF0IjoxNjg3NTE1MTcyLCJleHAiOjE2ODc2ODc5NzJ9.q3Ek-Gl2Z8a9eer_OEurLiqmbWMeuAj0Vq_kz441Fpw
 
 {
   "title": "Test house without auth",
@@ -40,18 +41,20 @@ Content-Type: application/json
 
 ## Удалить объявление по идентификатору
 
-DELETE http://localhost:4000/offer/6488370ede2dfd3ee0439988 HTTP/1.1
+DELETE http://localhost:4000/offer/6495761f2cae442c39f826f6 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5ydSIsImlkIjoiNjQ5NTcwMjQxNjU3YzAwMDRjMzRlYzYwIiwiaWF0IjoxNjg3NTE1MTcyLCJleHAiOjE2ODc2ODc5NzJ9.q3Ek-Gl2Z8a9eer_OEurLiqmbWMeuAj0Vq_kz441Fpw
 
 ###
 
 ## Обновить объявление
 
-PATCH http://localhost:4000/offer/648aadc28abae82ae6d76e16 HTTP/1.1
+PATCH http://localhost:4000/offer/649570671657c0004c34ec62 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5ydSIsImlkIjoiNjQ5NTcwMjQxNjU3YzAwMDRjMzRlYzYwIiwiaWF0IjoxNjg3NTE1MTcyLCJleHAiOjE2ODc2ODc5NzJ9.q3Ek-Gl2Z8a9eer_OEurLiqmbWMeuAj0Vq_kz441Fpw
 
 {
   "title": "Test house updated",
-  "price": 1500
+  "price": 1000
 }
 
 ###
@@ -63,6 +66,40 @@ GET http://localhost:4000/offer/city/6479f1fe8a049424ce3d9cbd/?limit=5 HTTP/1.1
 ###
 
 ## Список комментариев к объявлению
-GET http://localhost:4000/offer/648acc7f7aa36b67943516ee/comments HTTP/1.1
+GET http://localhost:4000/offer/6495761f2cae442c39f826f6/comments HTTP/1.1
+
+###
+
+## Загрузка превью для предложения
+POST http://localhost:4000/offer/64953627ddf94ab92c0102ce/preview HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5kZXYiLCJpZCI6IjY0OTUzZTMxZDMwNTk0NWJlNzliNTg5MCIsImlhdCI6MTY4NzUwMjQwMSwiZXhwIjoxNjg3Njc1MjAxfQ.Lwk-9uv4llxOwD6vcE8Rndsnui6Jzze2bMh5WEGCHcs
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="preview"; filename="image-1.jpeg"
+Content-Type: image/jpeg
+
+< /Users/damir/Desktop/image-1.jpeg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+## Загрузка изображений для предложения
+POST http://localhost:4000/offer/64953627ddf94ab92c0102ce/photos HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5kZXYiLCJpZCI6IjY0OTUzZTMxZDMwNTk0NWJlNzliNTg5MCIsImlhdCI6MTY4NzUwMjQwMSwiZXhwIjoxNjg3Njc1MjAxfQ.Lwk-9uv4llxOwD6vcE8Rndsnui6Jzze2bMh5WEGCHcs
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="photo"; filename="image-1.jpg"
+Content-Type: image/jpeg
+
+< /Users/damir/Desktop/image-1.jpg
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="photo"; filename="image-2.jpg"
+Content-Type: image/jpeg
+
+< /Users/damir/Desktop/image-2.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###

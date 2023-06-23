@@ -9,9 +9,6 @@ export default class CreateUserDto {
   @IsEmail({}, { message: 'Email must be valid address' })
   public email!: string;
 
-  @IsString({ message: 'AvatarPath is required' })
-  public avatar!: string;
-
   @IsOptional()
   @IsEnum(UserTypeEnum, { message: 'User type must be \'base\' or \'pro\'' })
   public userType!: UserTypeEnum;

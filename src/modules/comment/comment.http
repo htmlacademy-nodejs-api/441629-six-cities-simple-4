@@ -3,12 +3,12 @@
 
 POST http://localhost:4000/comment HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAbWFpbC5jb20iLCJpZCI6IjY0NzlmMWZlOGEwNDk0MjRjZTNkOWNiMiIsImlhdCI6MTY4NzI4MDg3OSwiZXhwIjoxNjg3NDUzNjc5fQ.NeujjOfwKoSVPXImoWn_5DD6qgTulc1fkqQMAWPVnMM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5ydSIsImlkIjoiNjQ5NTcwMjQxNjU3YzAwMDRjMzRlYzYwIiwiaWF0IjoxNjg3NTE1MTcyLCJleHAiOjE2ODc2ODc5NzJ9.q3Ek-Gl2Z8a9eer_OEurLiqmbWMeuAj0Vq_kz441Fpw
 
 {
   "text": "Test comment for token",
   "rating": 5,
-  "offerId": "6479f1ff8a049424ce3d9cc2"
+  "offerId": "6495761f2cae442c39f826f6"
 }
 
 ###

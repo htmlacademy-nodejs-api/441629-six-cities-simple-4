@@ -37,7 +37,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   })
   public city!: Ref<CityEntity>;
 
-  @prop()
+  @prop({ default: '' })
   public preview!: string;
 
   @prop({ type: String })
