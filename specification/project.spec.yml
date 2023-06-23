@@ -8,20 +8,41 @@ info:
     url: https://opensource.org/licenses/MIT
   version: 2.0.0
 tags:
-  - name: offers
+  - name: offer
     description: Действия с объявлениями.
-  - name: cities
+  - name: city
     description: Действия с городами.
-  - name: comments
+  - name: comment
     description: Действия с комментариями.
-  - name: users
+  - name: user
     description: Действия с пользователем.
 
 paths:
-  /users/register:
+  /offer:
+    get:
+      tags:
+        - offer
+      summary: Получить список предложений.
+      description: Отдает список предложений.
+      requestBody:
+        description: Информация для создания нового пользователя.
+        content:
+          application/json:
+            schema: {}
+        required: true
+
+      responses:
+        "200":
+          description: Список предложений.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offerResponse"
+
+  /user/register:
     post:
       tags:
-        - users
+        - user
       summary: Регистрация пользователя
       description: Регистрирует нового пользователя.
       requestBody:
@@ -43,26 +64,73 @@ paths:
         "409":
           description: Пользователь с таким email уже существует.
 
-  /users/login:
+  /user/login:
     post:
       tags:
-        - users
+        - user
       summary: Авторизация пользователя
       description: Авторизует пользователя на основе логина и пароля
+      requestBody:
+        description: Информация для авторизации.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/authUser"
+        required: true
+
+      responses:
+        "200":
+          description: Пользователь авторизован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+
+        "401":
+          description: Неверный логин или пароль.
 
     get:
       tags:
-        - users
+        - user
       summary: Проверка состояния пользователя
       description: Возвращает информацию по авторизованному пользователю
 
-  /users/{userId}/avatar:
+      responses:
+        "200":
+          description: Пользователь авторизован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+
+        "401":
+          description: Неверный логин или пароль.
+
+  /user/{userId}/avatar:
     post:
       tags:
-        - users
+        - user
       summary: Загрузить изображение аватара
       description: Загружает изображение аватара пользователя. Изображение
         аватара должно быть в формате `png` или `jpg`.
+      requestBody:
+        description: Информация для загрузки аватара.
+        content:
+          image/jpeg:
+            schema:
+              $ref: "#/components/schemas/userAvatar"
+        required: true
+
+      responses:
+        "200":
+          description: Аватар загружен. Объект с путем.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userAvatarResponse"
+
+        "401":
+          description: Неверный путь до файла.
 
 components:
   schemas:
@@ -74,26 +142,88 @@ components:
           type: string
           example: keks@htmlacademy.ru
 
-        firstname:
+        name:
           type: string
           example: Keks
-
-        lastname:
-          type: string
-          example: Cat
-
+        userType:
+          type: base | pro
+          example: base
         password:
           type: string
           example: 123456
 
     user:
       type: object
-
       properties:
-        id:
+        name:
           type: string
-          example: 6329c3d6a04ab1061c6425ea
-
+          example: Keks
         email:
           type: string
           example: keks@htmlacademy.ru
+        avatar:
+          type: string
+          example: your-avatar.jpg
+        userType:
+          type: base | pro
+          example: base
+        token:
+          type: string
+          example: JWT-string
+
+    authUser:
+      type: object
+      properties:
+        email:
+          type: string
+          example: keks@htmlacademy.ru
+        password:
+            type: string
+            example: 123456
+
+    userAvatar:
+      type: file
+      properties:
+        file: PATH_TO_FILE
+
+    userAvatarResponse:
+      type: object
+      properties:
+        avatar: code-of-avatar-filename
+
+    offerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 649574b83f49ad8eeeabac13
+        title:
+          type: string
+          example: Test house without auth
+        description:
+          type: string
+          example: Offer for testing with long text
+        postDate:
+          type: Date
+          example: 2022-05-12T11:56:37.573Z
+        city:
+          type: object
+          example: { id: 123, name: Paris }
+        preview:
+          type: string
+          example: image.jpg
+        isPremium:
+          type: boolean
+          example: false
+        rating:
+          type: number
+          example: 4
+        offerType:
+          type: string
+          example: house
+        price:
+          type: number
+          example: 100
+        commentsCount:
+          type: number
+          example: 10

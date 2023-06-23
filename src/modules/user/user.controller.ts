@@ -11,7 +11,6 @@ import { ConfigInterface } from '../../core/config/config.interface.js';
 import { RestSchema } from '../../core/config/rest.schema.js';
 import HttpError from '../../core/errors/http-error.js';
 import { createJWT, fillDTO } from '../../core/helpers/common.js';
-import UserRdo from './rdo/user.rdo.js';
 import LoginUserDto from './dto/login-user.dto.js';
 import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
 import { DocumentExistsMiddleware } from '../../core/middleware/document-exists.middleware.js';
@@ -21,15 +20,16 @@ import { UnknownRecord } from '../../types/unknown-record.type.js';
 import { JWT_ALGORITHM } from './user.constant.js';
 import LoggedUserRdo from './rdo/logged-user.rdo.js';
 import RegisterUserRdo from './rdo/register-user.rdo.js';
+import UploadUserAvatarResponse from './rdo/upload-user-avatar.response.js';
 
 @injectable()
 export default class UserController extends Controller {
   constructor(
     @inject(AppComponentEnum.LoggerInterface) protected readonly logger: LoggerInterface,
     @inject(AppComponentEnum.UserServiceInterface) private readonly userService: UserServiceInterface,
-    @inject(AppComponentEnum.ConfigInterface) private readonly configService: ConfigInterface<RestSchema>,
+    @inject(AppComponentEnum.ConfigInterface) protected readonly configService: ConfigInterface<RestSchema>,
   ) {
-    super(logger);
+    super(logger, configService);
 
     this.logger.info('Register routers for UserController...');
 
@@ -116,22 +116,22 @@ export default class UserController extends Controller {
       }
     );
 
-    this.ok(res, fillDTO(LoggedUserRdo, {
-      email: user.email,
+    this.ok(res, {
+      ...fillDTO(LoggedUserRdo, user),
       token,
-    }));
-  }
-
-  public async uploadAvatar(req: Request, res: Response) {
-    this.created(res, {
-      filepath: req.file?.path,
     });
   }
 
-  public async checkAuthenticate({ user: { email } }: Request, res: Response) {
-    const user = await this.userService.findByEmail(email);
+  public async uploadAvatar(req: Request, res: Response) {
+    const { userId } = req.params;
+    const uploadFile = { avatar: req.file?.filename };
+    await this.userService.updateById(userId, uploadFile);
 
-    if (!user) {
+    this.created(res, fillDTO(UploadUserAvatarResponse, uploadFile));
+  }
+
+  public async checkAuthenticate(req: Request, res: Response) {
+    if (!req.user) {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
         'Unauthorized',
@@ -139,6 +139,9 @@ export default class UserController extends Controller {
       );
     }
 
-    this.ok(res, fillDTO(UserRdo, user));
+    const { user: { email } } = req;
+    const foundedUser = await this.userService.findByEmail(email);
+
+    this.ok(res, fillDTO(LoggedUserRdo, foundedUser));
   }
 }

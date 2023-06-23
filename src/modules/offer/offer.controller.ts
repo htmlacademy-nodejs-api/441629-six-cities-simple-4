@@ -19,6 +19,12 @@ import { DEFAULT_DISCUSSED_OFFER_COUNT, DEFAULT_NEW_OFFER_COUNT } from './offer.
 import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
 import { DocumentExistsMiddleware } from '../../core/middleware/document-exists.middleware.js';
 import { PrivateRouteMiddleware } from '../../core/middleware/private-route.middleware.js';
+import { ConfigInterface } from '../../core/config/config.interface.js';
+import { RestSchema } from '../../core/config/rest.schema.js';
+import { UploadFileMiddleware, UploadFilesArrayMiddleware } from '../../core/middleware/upload-file.middleware.js';
+import UploadPreviewResponse from './rdo/upload-preview.response.js';
+import UploadPhotosResponse from './rdo/upload-photos.response.js';
+import { ValidateIsOwnerMiddleware } from '../../core/middleware/validate-is-owner.middleware.js';
 
 type ParamsOfferDetails = {
   offerId: string;
@@ -34,8 +40,9 @@ export default class OfferController extends Controller {
     @inject(AppComponentEnum.LoggerInterface) protected readonly logger: LoggerInterface,
     @inject(AppComponentEnum.OfferServiceInterface) private readonly offerService: OfferServiceInterface,
     @inject(AppComponentEnum.CommentServiceInterface) private readonly commentService: CommentServiceInterface,
+    @inject(AppComponentEnum.ConfigInterface) configService: ConfigInterface<RestSchema>,
   ) {
-    super(logger);
+    super(logger, configService);
 
     this.logger.info('Register routes for OfferControlle...');
 
@@ -70,6 +77,7 @@ export default class OfferController extends Controller {
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+        new ValidateIsOwnerMiddleware(this.offerService, 'Offer', 'offerId'),
       ],
     });
     this.addRoute({
@@ -81,6 +89,7 @@ export default class OfferController extends Controller {
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+        new ValidateIsOwnerMiddleware(this.offerService, 'Offer', 'offerId'),
       ],
     });
     this.addRoute({
@@ -99,14 +108,36 @@ export default class OfferController extends Controller {
       middlewares: [new ValidateObjectIdMiddleware('offerId')],
     });
     this.addRoute({
-      path: '/bundles/new',
+      path: '/offer/new',
       method: HttpMethodEnum.Get,
       handler: this.getNew,
     });
     this.addRoute({
-      path: '/bundles/discussed',
+      path: '/offer/discussed',
       method: HttpMethodEnum.Get,
       handler: this.getDiscussed,
+    });
+    this.addRoute({
+      path: '/:offerId/preview',
+      method: HttpMethodEnum.Post,
+      handler: this.uploadPreview,
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateObjectIdMiddleware('offerId'),
+        new ValidateIsOwnerMiddleware(this.offerService, 'Offer', 'offerId'),
+        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'preview'),
+      ],
+    });
+    this.addRoute({
+      path: '/:offerId/photos',
+      method: HttpMethodEnum.Post,
+      handler: this.uploadPhotos,
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateObjectIdMiddleware('offerId'),
+        new ValidateIsOwnerMiddleware(this.offerService, 'Offer', 'offerId'),
+        new UploadFilesArrayMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'photo'),
+      ]
     });
   }
 
@@ -142,11 +173,11 @@ export default class OfferController extends Controller {
     res: Response,
   ): Promise<void> {
     const { offerId } = params;
-    const offer = await this.offerService.deleteById(offerId);
 
+    await this.offerService.deleteById(offerId);
     await this.commentService.deleteByOfferId(offerId);
 
-    this.noContent(res, offer);
+    this.noContent(res, {});
   }
 
   public async update(
@@ -186,5 +217,25 @@ export default class OfferController extends Controller {
     const comments = await this.commentService.findByOfferId(params.offerId);
 
     this.ok(res, fillDTO(CommentRdo, comments));
+  }
+
+  public async uploadPreview(req: Request<ParamsOfferDetails>, res: Response) {
+    const { offerId } = req.params;
+    const updateDto = { preview: req.file?.filename };
+    await this.offerService.updateById(offerId, updateDto);
+    console.log(updateDto);
+
+    this.created(res, fillDTO(UploadPreviewResponse, updateDto));
+  }
+
+  public async uploadPhotos(req: Request<ParamsOfferDetails>, res: Response) {
+    const { offerId } = req.params;
+    const filenames: string[] = (req.files as Express.Multer.File[])
+      .map((item) => item.filename);
+
+    const updateDto = { photo: filenames };
+    await this.offerService.updateById(offerId, updateDto);
+
+    this.created(res, fillDTO(UploadPhotosResponse, updateDto));
   }
 }

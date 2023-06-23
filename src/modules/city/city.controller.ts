@@ -12,14 +12,17 @@ import CreateCityDto from './dto/create-city.dto.js';
 import HttpError from '../../core/errors/http-error.js';
 import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
 import { PrivateRouteMiddleware } from '../../core/middleware/private-route.middleware.js';
+import { ConfigInterface } from '../../core/config/config.interface.js';
+import { RestSchema } from '../../core/config/rest.schema.js';
 
 @injectable()
 export default class CityController extends Controller {
   constructor(
     @inject(AppComponentEnum.LoggerInterface) protected readonly logger: LoggerInterface,
     @inject(AppComponentEnum.CityServiceInterface) private readonly cityService: CityServiceInterface,
+    @inject(AppComponentEnum.ConfigInterface) configService: ConfigInterface<RestSchema>,
   ) {
-    super(logger);
+    super(logger, configService);
 
     this.logger.info('Register routes for CityController...');
 
