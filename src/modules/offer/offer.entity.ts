@@ -3,6 +3,7 @@ import { CityEntity } from '../city/city.entity.js';
 import { UserEntity } from '../user/user.entity.js';
 import { OfferTypeEnum } from '../../enums/offer-type.enum.js';
 import { AdvantageEnum } from '../../enums/advantage.enum.js';
+import { DEFAULT_COMMENTS_COUNT, DEFAULT_RATING_VALUE } from './offer.constant.js';
 
 const { prop, modelOptions } = typegoose;
 
@@ -46,7 +47,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop()
   public isPremium!: boolean;
 
-  @prop({ default: 5 })
+  @prop({ default: DEFAULT_RATING_VALUE })
   public rating!: number;
 
   @prop({
@@ -78,7 +79,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   })
   public owner!: Ref<UserEntity>;
 
-  @prop({ default: 0 })
+  @prop({ default: DEFAULT_COMMENTS_COUNT })
   public commentsCount!: number;
 
   @prop({ required: true, type: Coords })
