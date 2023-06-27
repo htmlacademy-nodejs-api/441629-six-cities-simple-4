@@ -3,6 +3,18 @@ import { Type } from 'class-transformer';
 import { AdvantageEnum } from '../../../enums/advantage.enum.js';
 import { OfferTypeEnum } from '../../../enums/offer-type.enum.js';
 import { CityType } from '../../../types/city.type.js';
+import {
+  MIN_OFFER_TITLE_LENGTH,
+  MAX_OFFER_TITLE_LENGTH,
+  MIN_OFFER_DESCRIPTION_LENGTH,
+  MAX_OFFER_DESCRIPTION_LENGTH,
+  MIN_OFFER_ROOM_COUNT,
+  MAX_OFFER_ROOM_COUNT,
+  MIN_OFFER_GUEST_COUNT,
+  MAX_OFFER_GUEST_COUNT,
+  MIN_OFFER_PRICE,
+  MAX_OFFER_PRICE,
+} from '../offer.constant.js';
 
 export class CoordsDto {
   @IsNumber({}, { message: 'Field must be number' })
@@ -13,10 +25,10 @@ export class CoordsDto {
 }
 
 export default class CreateOfferDto {
-  @Length(10, 100, {message: 'Title length must be between 10 and 100'})
+  @Length(MIN_OFFER_TITLE_LENGTH, MAX_OFFER_TITLE_LENGTH, { message: `Title length must be between ${MIN_OFFER_TITLE_LENGTH} and ${MAX_OFFER_TITLE_LENGTH}` })
   public title!: string;
 
-  @Length(20, 1024, {message: 'Description length must be between 20 and 1024'})
+  @Length(MIN_OFFER_DESCRIPTION_LENGTH, MAX_OFFER_DESCRIPTION_LENGTH, { message: `Description length must be between ${MIN_OFFER_DESCRIPTION_LENGTH} and ${MAX_OFFER_DESCRIPTION_LENGTH}` })
   public description!: string;
 
   @IsDateString({}, { message: 'postDate must be valid ISO date' })
@@ -32,18 +44,18 @@ export default class CreateOfferDto {
   public type!: OfferTypeEnum;
 
   @IsInt({ message: 'Field must be an integer' })
-  @Min(1, { message: 'Minimum count of rooms is 1' })
-  @Max(8, { message: 'Maximum count of rooms is 8' })
+  @Min(MIN_OFFER_ROOM_COUNT, { message: `Minimum count of rooms is ${MIN_OFFER_ROOM_COUNT}` })
+  @Max(MAX_OFFER_ROOM_COUNT, { message: `Maximum count of rooms is ${MAX_OFFER_ROOM_COUNT}` })
   public roomCount!: number;
 
   @IsInt({ message: 'Field must be an integer' })
-  @Min(1, { message: 'Minimum count of rooms is 1' })
-  @Max(10, { message: 'Maximum count of rooms is 10' })
+  @Min(MIN_OFFER_GUEST_COUNT, { message: `Minimum count of rooms is ${MIN_OFFER_GUEST_COUNT}` })
+  @Max(MAX_OFFER_GUEST_COUNT, { message: `Maximum count of rooms is ${MAX_OFFER_GUEST_COUNT}` })
   public guestCount!: number;
 
   @IsInt({ message: 'Field must be an integer' })
-  @Min(100, { message: 'Minimum count of rooms is 100' })
-  @Max(100000, { message: 'Maximum count of rooms is 100 000' })
+  @Min(MIN_OFFER_PRICE, { message: `Minimum count of rooms is ${MIN_OFFER_PRICE}` })
+  @Max(MAX_OFFER_PRICE, { message: `Maximum count of rooms is ${MAX_OFFER_PRICE}` })
   public price!: number;
 
   @IsArray({ message: 'Field advantage must be an integer' })
