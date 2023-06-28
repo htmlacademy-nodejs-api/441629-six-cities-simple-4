@@ -26,6 +26,6 @@ export default class GenerateCommand implements CliCommandInterface {
       await tsvFileWriter.write(offerGeneratorString.generate());
     }
 
-    console.log(`File ${filepath} was created!`);
+    console.info(`File ${filepath} was created!`);
   }
 }

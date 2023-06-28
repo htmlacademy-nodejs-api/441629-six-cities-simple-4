@@ -1,17 +1,21 @@
-export const DEFAULT_OFFER_COUNT = 60;
-export const DEFAULT_DISCUSSED_OFFER_COUNT = 5;
-export const DEFAULT_NEW_OFFER_COUNT = 5;
-export const DEFAULT_RATING_VALUE = 5;
-export const DEFAULT_COMMENTS_COUNT = 0;
-export const DEFAULT_PHOTOS_COUNT = 6;
+export const OfferDefault = {
+  COUNT: 60,
+  DISCUSSED_COUNT: 5,
+  NEW_COUNT: 5,
+  RATING_VALUE: 5,
+  COMMENTS_COUNT: 0,
+  PHOTOS_COUNT: 6,
+} as const;
 
-export const MIN_OFFER_TITLE_LENGTH = 10;
-export const MAX_OFFER_TITLE_LENGTH = 100;
-export const MIN_OFFER_DESCRIPTION_LENGTH = 20;
-export const MAX_OFFER_DESCRIPTION_LENGTH = 1024;
-export const MIN_OFFER_ROOM_COUNT = 1;
-export const MAX_OFFER_ROOM_COUNT = 8;
-export const MIN_OFFER_GUEST_COUNT = 1;
-export const MAX_OFFER_GUEST_COUNT = 10;
-export const MIN_OFFER_PRICE = 100;
-export const MAX_OFFER_PRICE = 100000;
+export const OfferConst = {
+  MIN_TITLE_LENGTH: 10,
+  MAX_TITLE_LENGTH: 100,
+  MIN_DESCRIPTION_LENGTH: 20,
+  MAX_DESCRIPTION_LENGTH: 1024,
+  MIN_ROOM_COUNT: 1,
+  MAX_ROOM_COUNT: 8,
+  MIN_GUEST_COUNT: 1,
+  MAX_GUEST_COUNT: 10,
+  MIN_PRICE: 100,
+  MAX_PRICE: 100000,
+} as const;

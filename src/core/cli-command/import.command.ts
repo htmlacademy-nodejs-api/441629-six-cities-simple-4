@@ -60,7 +60,7 @@ export default class ImportCommand implements CliCommandInterface {
   }
 
   private onComplete(count: number) {
-    console.log(`${count} rows imported.`);
+    console.info(`${count} rows imported.`);
     this.databaseService.disconnect();
   }
 
@@ -78,7 +78,7 @@ export default class ImportCommand implements CliCommandInterface {
     try {
       await fileReader.read();
     } catch (err) {
-      console.log(`Can't read the file: ${getErrorMessage(err)}`);
+      console.error(`Can't read the file: ${getErrorMessage(err)}`);
     }
   }
 }

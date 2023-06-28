@@ -14,7 +14,7 @@ export class ValidateIsOwnerMiddleware implements MiddlewareInterface {
   public async execute({ params, user }: Request, _res: Response, next: NextFunction): Promise<void> {
     const documentId = params[this.paramName];
     const offer = await this.service.findById(documentId);
-    console.log(offer?.owner.id, user.id);
+
     if (offer?.owner.id !== user.id) {
       throw new HttpError(
         StatusCodes.FAILED_DEPENDENCY,
