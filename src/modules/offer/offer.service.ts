@@ -6,7 +6,7 @@ import { LoggerInterface } from '../../core/logger/logger.interface.js';
 import { OfferEntity } from './offer.entity.js';
 import CreateOfferDto from './dto/create-offer.dto.js';
 import UpdateOfferDto from './dto/update-offer.dto.js';
-import { DEFAULT_OFFER_COUNT } from './offer.constant.js';
+import { OfferDefault } from './offer.constant.js';
 import { SortTypeEnum } from '../../types/sort-type.enum.js';
 
 @injectable()
@@ -31,7 +31,7 @@ export default class OfferService implements OfferServiceInterface {
   }
 
   public async find(count?: number): Promise<DocumentType<OfferEntity>[]> {
-    const limit = count ?? DEFAULT_OFFER_COUNT;
+    const limit = count ?? OfferDefault.COUNT;
     return this.offerModel
       .find({}, {}, { limit })
       .populate(['city', 'owner'])
@@ -52,7 +52,7 @@ export default class OfferService implements OfferServiceInterface {
   }
 
   public async findByCityId(cityId: string, count?: number): Promise<DocumentType<OfferEntity>[]> {
-    const limit = count ?? DEFAULT_OFFER_COUNT;
+    const limit = count ?? OfferDefault.COUNT;
     return this.offerModel
       .find({ city: cityId }, {}, { limit })
       .populate(['city', 'owner'])
@@ -92,7 +92,7 @@ export default class OfferService implements OfferServiceInterface {
   }
 
   public async findNew(count?: number): Promise<DocumentType<OfferEntity>[]> {
-    const limit = count ?? DEFAULT_OFFER_COUNT;
+    const limit = count ?? OfferDefault.COUNT;
     return this.offerModel
       .find()
       .sort({ createdAt: SortTypeEnum.Down })

@@ -15,7 +15,7 @@ import { RequestQueryType } from '../../types/request-query.type.js';
 import { CommentServiceInterface } from '../comment/comment-service.interface.js';
 import CommentRdo from '../comment/rdo/comment.rdo.js';
 import { ValidateObjectIdMiddleware } from '../../core/middleware/validate-objectid.middleware.js';
-import { DEFAULT_DISCUSSED_OFFER_COUNT, DEFAULT_NEW_OFFER_COUNT } from './offer.constant.js';
+import { OfferDefault } from './offer.constant.js';
 import { ValidateDtoMiddleware } from '../../core/middleware/validate-dto.middleware.js';
 import { DocumentExistsMiddleware } from '../../core/middleware/document-exists.middleware.js';
 import { PrivateRouteMiddleware } from '../../core/middleware/private-route.middleware.js';
@@ -199,13 +199,13 @@ export default class OfferController extends Controller {
   }
 
   public async getNew(_req: Request, res: Response) {
-    const offers = await this.offerService.findNew(DEFAULT_NEW_OFFER_COUNT);
+    const offers = await this.offerService.findNew(OfferDefault.NEW_COUNT);
 
     this.ok(res, fillDTO(OfferRdo, offers));
   }
 
   public async getDiscussed(_req: Request, res: Response) {
-    const offers = await this.offerService.findDiscussed(DEFAULT_DISCUSSED_OFFER_COUNT);
+    const offers = await this.offerService.findDiscussed(OfferDefault.DISCUSSED_COUNT);
 
     this.ok(res, fillDTO(OfferRdo, offers));
   }
@@ -223,7 +223,6 @@ export default class OfferController extends Controller {
     const { offerId } = req.params;
     const updateDto = { preview: req.file?.filename };
     await this.offerService.updateById(offerId, updateDto);
-    console.log(updateDto);
 
     this.created(res, fillDTO(UploadPreviewResponse, updateDto));
   }
